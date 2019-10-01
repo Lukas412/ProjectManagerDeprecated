@@ -1,0 +1,79 @@
+{
+  "structure": {
+    "files": {
+      "text": {
+        "tags": [
+          "text"
+        ],
+        "extension": [
+          "txt"
+        ]
+      },
+      "image": {
+        "tags": [
+          "image"
+        ],
+        "extension": [
+          "jpeg",
+          "jpg",
+          "jfif",
+          "exif",
+          "tiff",
+          "tif",
+          "gif",
+          "bmp",
+          "png",
+          "ppm",
+          "pgm",
+          "pbm",
+          "pnm",
+          "webp",
+          "hdr",
+          "spiff",
+          "heif",
+          "bpg"
+        ]
+      },
+      "presentation": {
+        "tags": [
+          "presentation",
+          "office"
+        ],
+        "extension": [
+          "ppt"
+        ]
+      },
+      "spreadsheet": {
+        "tags": [
+          "spreadsheet",
+          "office"
+        ]
+      },
+      "documents": {
+        "tags": [
+          "documents"
+        ],
+        "extension": [
+          "pdf"
+        ]
+      }
+    },
+    "paths": {
+      "text": {
+        ".": [
+          "text"
+        ]
+      },
+      "image": {
+        ".": [
+          "image"
+        ]
+      },
+      "documents": {
+        ".": [
+          "documents"
+        ]
+      }
+    }
+  }
+}

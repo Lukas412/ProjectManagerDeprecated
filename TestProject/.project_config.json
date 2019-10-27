@@ -1,12 +1,12 @@
 {
-    "description": null,
+    "description": "a project to test the engine",
     "name": "TestProject",
     "tags": [
         "documents",
         "presentation",
         "office",
         "programming",
-        "web",
+        "web-development",
         "html",
         "node-js",
         "npm",

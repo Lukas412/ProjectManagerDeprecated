@@ -119,7 +119,7 @@
         "programming",
         "node-js",
         "npm",
-        "web",
+        "web-development",
         "angular"
       ],
       "structure": [
@@ -181,7 +181,7 @@
       "path": "programming/html",
       "tags": [
         "programming",
-        "web",
+        "web-development",
         "html"
       ],
       "structure": [
@@ -192,7 +192,7 @@
       "path": "programming/php",
       "tags": [
         "programming",
-        "web",
+        "web-development",
         "php"
       ],
       "structure": [

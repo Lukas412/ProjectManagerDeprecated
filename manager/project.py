@@ -2,12 +2,12 @@ import os
 import json
 import shutil
 
-from .files import Directory
+from .files import Directory, StructureMatcher, File, Structure
 
 
 class Project:
 
-    CONFIG = '.project_config.json'
+    CONFIG_PATH = '.project_config.json'
 
     def __init__(self, path: str):
         self.path = path
@@ -16,8 +16,8 @@ class Project:
         self.description = None
         self.tags = None
 
-        self.structure = None
-        self.structure_tags = None
+        self.extensions = None
+        self.structures = None
         self.directory = None
 
     def load(self, config: dict) -> None:
@@ -29,7 +29,7 @@ class Project:
         self.load_files()
 
     def load_config(self) -> None:
-        config_path = os.path.join(self.path, Project.CONFIG)
+        config_path = os.path.join(self.path, Project.CONFIG_PATH)
 
         if not os.path.isfile(config_path):
             return
@@ -57,84 +57,81 @@ class Project:
             self.tags = config['tags']
 
     def save_config(self) -> None:
-        config_path = os.path.join(self.path, Project.CONFIG)
+        config_path = os.path.join(self.path, Project.CONFIG_PATH)
         config = {'name': self.name, 'description': self.description, 'tags': self.tags}
 
         with open(config_path, 'w', encoding='utf-8') as file:
             json.dump(config, file, indent=4, sort_keys=True)
 
-    def load_structure(self, structure: dict) -> None:
-        def load_structure_paths(current_path: list, structure_path: dict) -> None:
-            if '.' in structure_path:
-                for structure_path_type in structure_path['.']:
-                    for file_type in types[structure_path_type]:
-                        if file_type not in files:
-                            files[file_type] = []
+    def load_structure(self, config_structure: dict) -> None:
+        self.extensions = {}
+        self.structures = {}
 
-                        files[file_type].append(os.path.join(*current_path))
+        for file_type, file_type_spec in config_structure.items():
+            if 'path' not in file_type_spec or 'tags' not in file_type_spec:
+                continue
 
-            for path in structure_path.keys():
-                if path == '.':
-                    continue
+            if 'extensions' in file_type_spec:
+                for extension in file_type_spec['extensions']:
+                    self.extensions[extension] = {
+                        'path': os.path.normpath(file_type_spec['path']),
+                        'tags': file_type_spec['tags']
+                    }
 
-                next_path = current_path[:]
-                next_path.append(path)
-
-                load_structure_paths(next_path, structure_path[path])
-
-        if 'files' not in structure or 'paths' not in structure:
-            return
-
-        structure_files = structure['files']
-        structure_paths = structure['paths']
-
-        files = {}
-
-        types = {}
-        for type_, type_files in structure_files.items():
-            types[type_] = type_files["extension"]
-
-        load_structure_paths([], structure_paths)
-
-        structure_tags = {}
-
-        for type_, type_files in structure_files.items():
-            for file_extension in type_files["extension"]:
-                structure_tags[file_extension] = type_files["tags"]
-
-        self.structure = files
-        self.structure_tags = structure_tags
+            if 'structure' in file_type_spec:
+                self.structures[file_type] = {
+                    'match': StructureMatcher(file_type_spec['structure']),
+                    'path': os.path.normpath(file_type_spec['path']),
+                    'tags': file_type_spec['tags']
+                }
 
     def load_files(self) -> None:
-        self.directory = Directory(self.path)
+        self.directory = Directory(self.path, self.extensions, self.structures)
 
         self.tags = []
         for file in self.directory:
-            if file.type in self.structure_tags:
-                for tag in self.structure_tags[file.type]:
+            if type(file) == File:
+                for tag in self.extensions[file.type]['tags']:
+                    if tag not in self.tags:
+                        self.tags.append(tag)
+
+            elif type(file) == Structure:
+                for tag in self.structures[file.type]['tags']:
                     if tag not in self.tags:
                         self.tags.append(tag)
 
     def sort_files(self) -> None:
         for file in self.directory:
-            if file.type in self.structure:
-                delete: bool = True
+            if file.path == os.path.join(self.path, Project.CONFIG_PATH):
+                continue
 
-                for path in self.structure[file.type]:
-                    path_to = os.path.join(self.path, path, file.name)
+            if type(file) == File:
+                path_to = os.path.join(self.path, self.extensions[file.type]['path'], file.name)
 
-                    if file.path != path_to:
-                        print('copy \'{}\' to \'{}\''.format(file.path, path_to))
+                if file.path != path_to:
+                    print('copy \'{}\' to \'{}\''.format(file.path, path_to))
 
-                        os.makedirs(os.path.dirname(path_to), exist_ok=True)
-                        shutil.copy(os.path.join('.\\', file.path), path_to)
+                    os.makedirs(os.path.dirname(path_to), exist_ok=True)
+                    shutil.copy(os.path.join('.\\', file.path), path_to)
 
-                    else:
-                        delete = False
-
-                if delete:
                     print('remove \'{}\''.format(file.path))
                     os.remove(os.path.join('.\\', file.path))
+
+            elif type(file) == Structure:
+                path_to = os.path.join(self.path, self.structures[file.type]['path'], file.name)
+
+                if file.path != path_to:
+                    print('copy \'{}\' to \'{}\''.format(file.path, path_to))
+
+                    os.makedirs(os.path.dirname(path_to), exist_ok=True)
+                    try:
+                        shutil.copytree(os.path.join('.\\', file.path), path_to)
+
+                    except FileExistsError:
+                        print('copy failed file exists')
+
+                    print('remove \'{}\''.format(file.path))
+                    shutil.rmtree(os.path.join('.\\', file.path))
 
         delete = True
         while delete:

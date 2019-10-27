@@ -1,79 +1,162 @@
 {
   "structure": {
-    "files": {
-      "text": {
-        "tags": [
-          "text"
-        ],
-        "extension": [
-          "txt"
-        ]
-      },
-      "image": {
-        "tags": [
-          "image"
-        ],
-        "extension": [
-          "jpeg",
-          "jpg",
-          "jfif",
-          "exif",
-          "tiff",
-          "tif",
-          "gif",
-          "bmp",
-          "png",
-          "ppm",
-          "pgm",
-          "pbm",
-          "pnm",
-          "webp",
-          "hdr",
-          "spiff",
-          "heif",
-          "bpg"
-        ]
-      },
-      "presentation": {
-        "tags": [
-          "presentation",
-          "office"
-        ],
-        "extension": [
-          "ppt"
-        ]
-      },
-      "spreadsheet": {
-        "tags": [
-          "spreadsheet",
-          "office"
-        ]
-      },
-      "documents": {
-        "tags": [
-          "documents"
-        ],
-        "extension": [
-          "pdf"
-        ]
-      }
+    "text": {
+      "path": "text",
+      "tags": [
+        "text"
+      ],
+      "extensions": [
+        "txt"
+      ]
     },
-    "paths": {
-      "text": {
-        ".": [
-          "text"
-        ]
-      },
-      "image": {
-        ".": [
-          "image"
-        ]
-      },
-      "documents": {
-        ".": [
-          "documents"
-        ]
-      }
+    "image": {
+      "path": "image",
+      "tags": [
+        "image"
+      ],
+      "extensions": [
+        "bmp",
+        "bpg",
+        "exif",
+        "gif",
+        "hdr",
+        "heif",
+        "jfif",
+        "jpg",
+        "jpeg",
+        "pbm",
+        "pgm",
+        "png",
+        "pnm",
+        "ppm",
+        "spiff",
+        "tif",
+        "tiff",
+        "webp"
+      ]
+    },
+    "presentation": {
+      "path": "office/presentation",
+      "tags": [
+        "presentation",
+        "office"
+      ],
+      "extensions": [
+        "ppt",
+        "pptx",
+        "pptm",
+        "potm",
+        "pot",
+        "ppsx",
+        "ppsm",
+        "pps",
+        "ppam",
+        "ppa",
+        "potx",
+        "odp",
+        "sda",
+        "sdd",
+        "sdp",
+        "uop"
+      ]
+    },
+    "spreadsheet": {
+      "path": "office/spreadsheet",
+      "tags": [
+        "spreadsheet",
+        "office"
+      ],
+      "extensions": [
+        "xls",
+        "xlw",
+        "xlt",
+        "xlsx",
+        "xlsm",
+        "xltx",
+        "xltm",
+        "xlsb",
+        "wk1",
+        "wks",
+        "sdc",
+        "uos",
+        "pxl",
+        "wb2"
+      ]
+    },
+    "sheet": {
+      "path": "office/sheet",
+      "tags": [
+        "sheet",
+        "office"
+      ],
+      "extensions": [
+        "doc",
+        "dot",
+        "docx",
+        "docm",
+        "dotx",
+        "dotm",
+        "wpd",
+        "wps",
+        "uot",
+        "psw"
+      ]
+    },
+    "documents": {
+      "path": "office/documents",
+      "tags": [
+        "documents"
+      ],
+      "extensions": [
+        "pdf",
+        "xml",
+        "json"
+      ]
+    },
+    "angular": {
+      "path": "programming/node-js/angular",
+      "tags": [
+        "node-js",
+        "npm",
+        "angular"
+      ],
+      "structure": [
+        "package.json",
+        "angular.json"
+      ]
+    },
+    "express": {
+      "path": "programming/node-js",
+      "tags": [
+        "node-js",
+        "npm"
+      ],
+      "structure": [
+        "index.js",
+        "package.json"
+      ]
+    },
+    "express-typescript": {
+      "path": "programming/node-js",
+      "tags": [
+        "node-js",
+        "npm"
+      ],
+      "structure": [
+        "dist/index.js",
+        "src/index.ts",
+        "package.json"
+      ]
+    },
+    "node-js": {
+      "path": "programming/node-js",
+      "tags": [
+        "node-js",
+        "npm"
+      ],
+      "structure": [
+        "package.json"
+      ]
     }
   }
 }

@@ -2,7 +2,12 @@
     "description": null,
     "name": "TestProject",
     "tags": [
-        "text",
-        "documents"
+        "documents",
+        "presentation",
+        "office",
+        "node-js",
+        "npm",
+        "angular",
+        "text"
     ]
 }

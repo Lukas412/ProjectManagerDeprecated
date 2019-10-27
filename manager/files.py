@@ -1,3 +1,4 @@
+import glob
 import os
 import itertools
 
@@ -9,7 +10,7 @@ class StructureMatcher:
 
     def match(self, path: str) -> bool:
         for structure_path in self.structure:
-            if not os.path.exists(os.path.join(path, structure_path)):
+            if not glob.glob(os.path.join(path, structure_path)):
                 return False
         return True
 

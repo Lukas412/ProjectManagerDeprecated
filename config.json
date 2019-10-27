@@ -116,8 +116,10 @@
     "angular": {
       "path": "programming/node-js/angular",
       "tags": [
+        "programming",
         "node-js",
         "npm",
+        "web",
         "angular"
       ],
       "structure": [
@@ -126,10 +128,13 @@
       ]
     },
     "express": {
-      "path": "programming/node-js",
+      "path": "programming/node-js/express",
       "tags": [
+        "programming",
         "node-js",
-        "npm"
+        "npm",
+        "api",
+        "express"
       ],
       "structure": [
         "index.js",
@@ -137,10 +142,13 @@
       ]
     },
     "express-typescript": {
-      "path": "programming/node-js",
+      "path": "programming/node-js/express",
       "tags": [
+        "programming",
         "node-js",
-        "npm"
+        "npm",
+        "api",
+        "express"
       ],
       "structure": [
         "dist/index.js",
@@ -151,11 +159,44 @@
     "node-js": {
       "path": "programming/node-js",
       "tags": [
+        "programming",
         "node-js",
         "npm"
       ],
       "structure": [
         "package.json"
+      ]
+    },
+    "python": {
+      "path": "programming/python",
+      "tags": [
+        "programming",
+        "python"
+      ],
+      "structure": [
+        "*.py"
+      ]
+    },
+    "html": {
+      "path": "programming/html",
+      "tags": [
+        "programming",
+        "web",
+        "html"
+      ],
+      "structure": [
+        "index.html"
+      ]
+    },
+    "php": {
+      "path": "programming/php",
+      "tags": [
+        "programming",
+        "web",
+        "php"
+      ],
+      "structure": [
+        "index.php"
       ]
     }
   }

@@ -5,9 +5,16 @@
         "documents",
         "presentation",
         "office",
+        "programming",
+        "web",
+        "html",
         "node-js",
         "npm",
         "angular",
+        "api",
+        "express",
+        "php",
+        "python",
         "text"
     ]
 }

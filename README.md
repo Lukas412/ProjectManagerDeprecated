@@ -3,3 +3,5 @@ In this repository you will find an engine to manage your projects. It's designe
 
 ## Install
 The project is not finished yet, but I'm working on it right now.
+
+## Usage

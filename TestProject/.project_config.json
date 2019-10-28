@@ -1,5 +1,18 @@
 {
     "description": "a project to test the engine",
+    "files": [
+        ".\\office\\documents\\test1.pdf",
+        ".\\office\\presentation\\test2.pptx",
+        ".\\programming\\html\\HtmlTestProject",
+        ".\\programming\\node-js\\angular\\AngularTestProject",
+        ".\\programming\\node-js\\express\\ExpressTestProject",
+        ".\\programming\\node-js\\express\\ExpressTypescriptTestProject",
+        ".\\programming\\node-js\\NodeJSTestProject",
+        ".\\programming\\php\\PhpTestProject",
+        ".\\programming\\python\\PythonTestProject",
+        ".\\text\\test3.txt",
+        ".\\text\\test4.txt"
+    ],
     "name": "TestProject",
     "tags": [
         "documents",

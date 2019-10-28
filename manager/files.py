@@ -5,7 +5,7 @@ import itertools
 
 class StructureMatcher:
 
-    def __init__(self, structure: dict):
+    def __init__(self, structure: list):
         self.structure = structure
 
     def match(self, path: str) -> bool:
@@ -33,8 +33,9 @@ class Structure:
 
 class Directory:
 
-    def __init__(self, path: str, extensions: dict, structures: dict):
+    def __init__(self, path: str, ignore: list, extensions: dict, structures: dict):
         self.path: str = path
+        self.ignore: list = ignore
         self.extensions: dict = extensions
         self.structures: dict = structures
 
@@ -45,6 +46,9 @@ class Directory:
         for file_name in os.listdir(path):
             file_path: str = os.path.join(path, file_name)
 
+            if file_name in ignore:
+                continue
+
             if os.path.isfile(file_path) and self.match_extensions(file_path):
                 self.files.append(File(file_path))
 
@@ -52,15 +56,16 @@ class Directory:
                 self.formations.append(Structure(file_path, self.match_structures(file_path)))
 
             else:
-                self.directories.append(Directory(os.path.join(path, file_name), extensions, structures))
+                self.directories.append(Directory(os.path.join(path, file_name), ignore, extensions, structures))
 
     def match_extensions(self, path):
         return os.path.splitext(path)[1][1:] in self.extensions
 
     def match_structures(self, path: str) -> str:
-        for structure_type, structure in self.structures.items():
-            if structure['match'].match(path):
-                return structure_type
+        for structure_type, structures in self.structures.items():
+            for structure in structures:
+                if structure['match'].match(path):
+                    return structure_type
         return ''
 
     def __iter__(self):

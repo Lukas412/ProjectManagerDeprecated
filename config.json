@@ -136,24 +136,20 @@
         "api",
         "express"
       ],
-      "structure": [
-        "index.js",
-        "package.json"
-      ]
-    },
-    "express-typescript": {
-      "path": "programming/node-js/express",
-      "tags": [
-        "programming",
-        "node-js",
-        "npm",
-        "api",
-        "express"
-      ],
-      "structure": [
-        "dist/index.js",
-        "src/index.ts",
-        "package.json"
+      "structures": [
+        [
+          "index.js",
+          "package.json"
+        ],
+        [
+          "app.js",
+          "package.json"
+        ],
+        [
+          "package.json",
+          "dist/index.js",
+          "src/index.ts"
+        ]
       ]
     },
     "node-js": {

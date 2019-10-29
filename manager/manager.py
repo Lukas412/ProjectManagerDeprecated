@@ -14,8 +14,8 @@ class Manager:
                                               add_help=True)
 
         self.parser.add_argument('command', type=str, choices=['backup', 'check', 'init', 'sort'],
-                                 help='action to perform')
-        self.parser.add_argument('-p', '--path', default='.', type=str, help='path to perform action')
+                                 help='command to run')
+        self.parser.add_argument('-p', '--path', default='.', type=str, help='path of the project')
 
         self.args = self.parser.parse_args()
 

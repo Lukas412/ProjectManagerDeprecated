@@ -6,7 +6,7 @@ The project is not finished yet, but I'm working on it right now.
 
 ## Usage
 
-###positional arguments
+positional arguments
 
 <table>
   <tr>
@@ -23,7 +23,7 @@ The project is not finished yet, but I'm working on it right now.
   </tr>
 </table>
 
-###optional arguments
+optional arguments
 
 <table>
   <tr>

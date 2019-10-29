@@ -1,3 +1,4 @@
+import datetime
 import os
 import json
 import shutil
@@ -16,6 +17,9 @@ class Project:
         self.description = None
         self.tags = None
 
+        self.backup_path = None
+        self.backup_name = None
+
         self.extensions = None
         self.structures = None
         self.directory = None
@@ -24,6 +28,7 @@ class Project:
         self.load_config()
 
         if 'structure' in config:
+            self.load_backup(config['backup'])
             self.load_structure(config['structure'])
 
         self.load_files()
@@ -65,6 +70,15 @@ class Project:
 
         with open(config_path, 'w', encoding='utf-8') as file:
             json.dump(config, file, indent=4, sort_keys=True)
+
+    def load_backup(self, config_backup: dict):
+        self.backup_name = '{project_name}-{date_time}'
+
+        if 'path' in config_backup:
+            self.backup_path = config_backup['path']
+
+        if 'name' in config_backup:
+            self.backup_name = config_backup['name']
 
     def load_structure(self, config_structure: dict) -> None:
         self.extensions = {}
@@ -180,6 +194,19 @@ class Project:
                     os.rmdir(path)
 
                     delete = True
+
+    def backup(self):
+        date_time = datetime.datetime.now().strftime("%Y.%m.%d-%H.%M.%S")
+        file_path = os.path.normpath(os.path.join(self.backup_path, self.backup_name
+                                                  .format(project_name=self.name, date_time=date_time)))
+
+        print('copy \'{}\' to \'{}\''.format(os.path.abspath(self.path), file_path))
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        try:
+            shutil.copytree(os.path.abspath(self.path), file_path)
+
+        except FileExistsError:
+            print('copy failed file exists')
 
     def __del__(self):
         self.save_config()

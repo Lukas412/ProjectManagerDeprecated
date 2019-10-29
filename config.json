@@ -1,4 +1,8 @@
 {
+  "backup": {
+    "path": "D:/backup/",
+    "name": "{project_name}/{project_name}-{date_time}"
+  },
   "structure": {
     "text": {
       "path": "text",
@@ -6,7 +10,8 @@
         "text"
       ],
       "extensions": [
-        "txt"
+        "txt",
+        "text"
       ]
     },
     "image": {

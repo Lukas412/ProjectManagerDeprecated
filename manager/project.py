@@ -1,6 +1,7 @@
 import datetime
 import os
 import json
+import re
 import shutil
 
 from .files import Directory, StructureMatcher, File, Structure
@@ -9,13 +10,17 @@ from .files import Directory, StructureMatcher, File, Structure
 class Project:
 
     CONFIG_PATH = '.project_config.json'
+    RELEASE_FILE_NAME = re.compile('^[A-Z][A-Za-z0-9]+$', re.MULTILINE)
 
     def __init__(self, path: str):
         self.path = path
 
         self.name = None
         self.description = None
+        self.version = None
         self.tags = None
+
+        self.release_path = None
 
         self.backup_path = None
         self.backup_name = None
@@ -29,6 +34,7 @@ class Project:
 
         if 'structure' in config:
             self.load_backup(config['backup'])
+            self.load_release(config['release'])
             self.load_structure(config['structure'])
 
         self.load_files()
@@ -65,7 +71,8 @@ class Project:
             'name': self.name,
             'description': self.description,
             'tags': self.tags,
-            'files': [file.path for file in self.directory]
+            'files': [file.path for file in self.directory],
+            'release': [file.path for file in self.directory if self.__class__.RELEASE_FILE_NAME.match(file.name)]
         }
 
         with open(config_path, 'w', encoding='utf-8') as file:
@@ -79,6 +86,12 @@ class Project:
 
         if 'name' in config_backup:
             self.backup_name = config_backup['name']
+
+    def load_release(self, config_release: dict):
+        self.release_path = './release'
+
+        if 'path' in config_release:
+            self.backup_path = config_release['path']
 
     def load_structure(self, config_structure: dict) -> None:
         self.extensions = {}
@@ -117,7 +130,8 @@ class Project:
                     })
 
     def load_files(self) -> None:
-        self.directory = Directory(self.path, [self.__class__.CONFIG_PATH], self.extensions, self.structures)
+        self.directory = Directory(self.path, ['./{}'.format(self.__class__.CONFIG_PATH), self.release_path],
+                                   self.extensions, self.structures)
 
         self.tags = []
         for file in self.directory:
@@ -149,6 +163,9 @@ class Project:
 
                     if file.path != path_to:
                         print('move \'{}\' to \'{}\''.format(file.path, path_to))
+
+            if self.__class__.RELEASE_FILE_NAME.match(file.name):
+                print('release \'{}\''.format(file.path))
 
     def sort_files(self) -> None:
         for file in self.directory:
@@ -197,16 +214,33 @@ class Project:
 
     def backup(self):
         date_time = datetime.datetime.now().strftime("%Y.%m.%d-%H.%M.%S")
-        file_path = os.path.normpath(os.path.join(self.backup_path, self.backup_name
-                                                  .format(project_name=self.name, date_time=date_time)))
+        file_path = os.path.normpath(os.path.join(self.backup_path, self.backup_name.format(project_name=self.name,
+                                                                                            date_time=date_time)))
 
         print('copy \'{}\' to \'{}\''.format(os.path.abspath(self.path), file_path))
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        os.makedirs(os.path.abspath(file_path), exist_ok=True)
+
         try:
             shutil.copytree(os.path.abspath(self.path), file_path)
 
         except FileExistsError:
             print('copy failed file exists')
+
+    def release(self):
+        for file in self.directory:
+            if self.__class__.RELEASE_FILE_NAME.match(file.name):
+                path_to = os.path.abspath(os.path.join(self.release_path, file.name))
+                path_from = os.path.abspath(file.path)
+
+                print('copy \'{}\' to \'{}\''.format(path_from, path_to))
+                try:
+                    if os.path.exists(path_to):
+                        shutil.rmtree(path_to)
+
+                    shutil.copytree(path_from, path_to)
+
+                except FileExistsError as e:
+                    print('copy failed file exists')
 
     def __del__(self):
         self.save_config()

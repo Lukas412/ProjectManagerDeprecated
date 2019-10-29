@@ -11,9 +11,19 @@
         ".\\programming\\php\\PhpTestProject",
         ".\\programming\\python\\PythonTestProject",
         ".\\text\\test3.txt",
-        ".\\text\\test4.txt"
+        ".\\text\\test4.txt",
+        ".\\.project_config.json"
     ],
     "name": "TestProject",
+    "release": [
+        ".\\programming\\html\\HtmlTestProject",
+        ".\\programming\\node-js\\angular\\AngularTestProject",
+        ".\\programming\\node-js\\express\\ExpressTestProject",
+        ".\\programming\\node-js\\express\\ExpressTypescriptTestProject",
+        ".\\programming\\node-js\\NodeJSTestProject",
+        ".\\programming\\php\\PhpTestProject",
+        ".\\programming\\python\\PythonTestProject"
+    ],
     "tags": [
         "documents",
         "presentation",

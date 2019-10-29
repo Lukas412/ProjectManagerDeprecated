@@ -13,7 +13,7 @@ class Manager:
                                                           'It\'s designed to keep the process clean and sorted.',
                                               add_help=True)
 
-        self.parser.add_argument('command', type=str, choices=['backup', 'check', 'init', 'sort'],
+        self.parser.add_argument('command', type=str, choices=['backup', 'check', 'init', 'release', 'sort'],
                                  help='command to run')
         self.parser.add_argument('-p', '--path', default='.', type=str, help='path of the project')
 
@@ -26,7 +26,7 @@ class Manager:
         self.run(self.args.command)
 
     def run(self, command: str):
-        if command in ['backup', 'check', 'init', 'sort']:
+        if command in ['backup', 'check', 'init', 'release', 'sort']:
             project = Project('.')
             project.load(self.config)
 
@@ -35,6 +35,9 @@ class Manager:
 
             elif command == 'check':
                 project.check_files()
+
+            elif command == 'release':
+                project.release()
 
             elif command == 'sort':
                 project.sort_files()

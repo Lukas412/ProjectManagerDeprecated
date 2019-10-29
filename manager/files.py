@@ -46,8 +46,9 @@ class Directory:
         for file_name in os.listdir(path):
             file_path: str = os.path.join(path, file_name)
 
-            if file_name in ignore:
-                continue
+            for ignore_file_name in self.ignore:
+                if os.path.abspath(file_path) == os.path.abspath(ignore_file_name):
+                    continue
 
             if os.path.isfile(file_path) and self.match_extensions(file_path):
                 self.files.append(File(file_path))
@@ -56,7 +57,14 @@ class Directory:
                 self.formations.append(Structure(file_path, self.match_structures(file_path)))
 
             else:
-                self.directories.append(Directory(os.path.join(path, file_name), ignore, extensions, structures))
+                skip = False
+
+                for ignore_file_name in self.ignore:
+                    if os.path.abspath(ignore_file_name) == os.path.abspath(file_path):
+                        skip = True
+
+                if not skip:
+                    self.directories.append(Directory(file_path, ignore, extensions, structures))
 
     def match_extensions(self, path):
         return os.path.splitext(path)[1][1:] in self.extensions

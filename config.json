@@ -1,4 +1,7 @@
 {
+  "release": {
+    "path": "./release"
+  },
   "backup": {
     "path": "D:/backup/",
     "name": "{project_name}/{project_name}-{date_time}"

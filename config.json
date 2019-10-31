@@ -130,10 +130,18 @@
         "web-development",
         "angular"
       ],
-      "structure": [
-        "package.json",
-        "angular.json"
-      ]
+      "structure": {
+        "files": [
+          "package.json",
+          "angular.json"
+        ],
+        "release": {
+          "path": "/dist",
+          "commands": [
+            "ng build --prod"
+          ]
+        }
+      }
     },
     "express": {
       "path": "programming/node-js/express",
@@ -145,19 +153,35 @@
         "express"
       ],
       "structures": [
-        [
-          "index.js",
-          "package.json"
-        ],
-        [
-          "app.js",
-          "package.json"
-        ],
-        [
-          "package.json",
-          "dist/index.js",
-          "src/index.ts"
-        ]
+        {
+          "files": [
+            "index.js",
+            "package.json"
+          ],
+          "release": {
+            "path": "/"
+          }
+        },
+        {
+          "files": [
+            "app.js",
+            "package.json"
+          ],
+          "release": {
+            "path": "/"
+          }
+        },
+        {
+          "files": [
+            "package.json",
+            "dist/index.js",
+            "src/index.ts"
+          ],
+          "release": {
+            "path": "/dist",
+            "commands": "npm run build"
+          }
+        }
       ]
     },
     "node-js": {
@@ -167,9 +191,14 @@
         "node-js",
         "npm"
       ],
-      "structure": [
-        "package.json"
-      ]
+      "structure": {
+        "files": [
+          "package.json"
+        ],
+        "release": {
+          "path": "/"
+        }
+      }
     },
     "python": {
       "path": "programming/python",
@@ -177,9 +206,14 @@
         "programming",
         "python"
       ],
-      "structure": [
-        "*.py"
-      ]
+      "structure": {
+        "files": [
+          "*.py"
+        ],
+        "release": {
+          "path": "/dist"
+        }
+      }
     },
     "html": {
       "path": "programming/html",
@@ -188,9 +222,14 @@
         "web-development",
         "html"
       ],
-      "structure": [
-        "index.html"
-      ]
+      "structure": {
+        "files": [
+          "index.html"
+        ],
+        "release": {
+          "path": "/"
+        }
+      }
     },
     "php": {
       "path": "programming/php",
@@ -199,9 +238,14 @@
         "web-development",
         "php"
       ],
-      "structure": [
-        "index.php"
-      ]
+      "structure": {
+        "files": [
+          "index.php"
+        ],
+        "release": {
+          "path": "/"
+        }
+      }
     }
   }
 }

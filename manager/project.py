@@ -113,7 +113,8 @@ class Project:
                     self.structures[file_type] = []
 
                 self.structures[file_type].append({
-                    'match': StructureMatcher(file_type_spec['structure']),
+                    'match': StructureMatcher(file_type_spec['structure']['files']),
+                    'release': file_type_spec['structure']['release'],
                     'path': os.path.normpath(file_type_spec['path']),
                     'tags': file_type_spec['tags']
                 })
@@ -124,7 +125,8 @@ class Project:
 
                 for structure in file_type_spec['structures']:
                     self.structures[file_type].append({
-                        'match': StructureMatcher(structure),
+                        'match': StructureMatcher(structure['files']),
+                        'release': structure['release'],
                         'path': os.path.normpath(file_type_spec['path']),
                         'tags': file_type_spec['tags']
                     })
